@@ -2,7 +2,7 @@ import copy
 import random
 import matplotlib.pyplot as plt
 
-def crossover_ordenado(parent1, parent2):
+def crossover_ordered(parent1, parent2):
     
     filho = parent1
 
@@ -29,7 +29,7 @@ def crossover_ordenado(parent1, parent2):
     return filho
 
 
-def crossover_alternativo(parent1, parent2):
+def crossover_alternative(parent1, parent2):
     
     filho = parent1
 
@@ -70,3 +70,11 @@ def mutation1(r):
 #         r[i+k] = temp
 
 #     return r
+
+def gerar_population(size, dimension):
+    population = []
+    for i in range(tam):
+        population.append(random.sample(range(1,dimension)))
+
+    return population
+
