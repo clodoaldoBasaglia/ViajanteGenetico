@@ -1,6 +1,7 @@
 import copy
 import random
 import matplotlib.pyplot as plt
+import random
 
 def crossover_ordered(parent1, parent2):
     
@@ -71,10 +72,37 @@ def mutation1(r):
 
 #     return r
 
-def gerar_population(size, dimension):
+def generate_population(size, dimension):
     population = []
-    for i in range(tam):
-        population.append(random.sample(range(1,dimension)))
+    for i in range(size):
+        population.append(random.sample(range(1,dimension+1), dimension))
 
     return population
 
+def fitness(vector, matriz_distance):
+    soma = 0
+    for i in range (0, len(vector)-1):
+        soma += matriz_distance[vector[i]][vector[i+1]]
+    return soma + matriz_distance[vector[0]][vector[-1]]
+
+def acumular(v):
+    res = []
+    acum = 0
+    for i in v:
+        res.append(i + acum)
+        acum = res[-1]
+    return res
+
+def random_select(pop, f, matriz):
+    fit = []
+    for p in pop:
+        fit.append(1/f(p, matriz))
+    soma = sum(fit)
+    norm = map(lambda x: x/soma, fit)
+
+    acm = acumular(norm)
+    r = random.random()  # retorna um numero entre 0 e 1
+
+    for i in range(len(acm)):
+        if r < acm[i]:  # verifica em qual intervalo o numero aleatorio esta
+            return pop[i]
