@@ -50,4 +50,23 @@ def crossover_alternativo(parent1, parent2):
 
     return filho
 
-    
+def mutation1(r):
+
+    a = random.randint(0, len(r)-1)
+    b = random.randint(0, len(r)-1)
+
+    temp = r[a]
+    r[a] = r[b]
+    r[b] = temp
+
+    return r
+
+# def mutation2(r):
+#     a = random.randint(1, len(r)-1)
+
+#     for i in range(0, len(r)-k, k):
+#         temp = r[i]
+#         r[i] = r[i+k]
+#         r[i+k] = temp
+
+#     return r
