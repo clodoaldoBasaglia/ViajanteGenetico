@@ -1,12 +1,10 @@
-import copy
 import random
 import matplotlib.pyplot as plt
-import random
+import math
 
 def crossover_ordered(parent1, parent2):
     
-    filho = parent1
-
+    son = parent1
     #inicia p com numeros aleatorios depois ordena
     p = random.randint(0, len(parent1))
     p.sort()
@@ -25,15 +23,14 @@ def crossover_ordered(parent1, parent2):
             p_ord.append(s.index(i))
 
     for i in range(len(s)):
-        filho[p[i]] = s[p_ord[i]]
+        son[p[i]] = s[p_ord[i]]
 
-    return filho
+    return son
 
 
 def crossover_alternative(parent1, parent2):
     
     filho = parent1
-
     # corte aleatoria
     corte = random.randrange(1, len(parent1))
 
@@ -73,10 +70,12 @@ def mutation1(r):
 #     return r
 
 def generate_population(size, dimension):
+    list_cities = range(1, dimension+1)
+    r = random.sample(list_cities, dimension)
+
     population = []
     for i in range(size):
-        population.append(random.sample(range(1,dimension+1), dimension))
-
+        population.append(r)
     return population
 
 def fitness(vector, matriz_distance):
