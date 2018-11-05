@@ -1,3 +1,6 @@
+#!/usr/bin/python
+#coding: utf-8
+
 import random
 import matplotlib.pyplot as plt
 import math
