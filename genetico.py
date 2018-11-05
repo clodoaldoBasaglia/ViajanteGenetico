@@ -38,7 +38,7 @@ def crossover_alternative(parent1, parent2):
 
         #se parent2[i] esta entre as posicoes 0 e corte do vetor filho
         if (parent2[i] not in filho[0:i]):
-            #se não
+            #se nao
 
             # o valor de filho[i] substitui a posicao que tem o valor igual a parent2[i] no vetor filho
             filho[filho.index(parent2[i])] = filho[i]
@@ -109,6 +109,62 @@ def random_select(pop, f, matriz):
 
 
 def genetico(pop_inicial, f, estagnacao, tx_mutacao, matriz, use_crossover_alternativo=False, id_mutacao=1, elitismo=False):
-
-
-    return pop_inicial
+    populacao = pop_inicial
+    fit=map((lambda x:f(x,matriz)),pop)
+    fit_melhor_caminho = min(fit)
+    melhor_caminho = pop[fit.index(fit_melhor_caminho)]
+    n_maximo_sem_mudancas = 0
+    
+    min_fits=[]
+    max_fits=[]
+    while n_maximo_sem_mudancas  < estagnacao:
+        p_nova=[]
+        print(n_maximo_sem_mudancas)
+        for i in range(len(pop_inicial)):
+            x = random_select(populacao,f,matriz)
+            y = random_select(populacao,f,matriz)
+            
+            if use_crossover_alternativo:
+                novo = crossover_alternative(x,y)
+            else:
+                novo = crossover_ordered(x,y)
+            r = random.randrange(0,10)
+            
+            if r < tx_mutacao:
+                mutation1(novo,id_mutacao)
+            p_nova.append(novo)
+            if elitismo:
+                pop_sort = copy.copy(fit)
+                pop_sort.sort(reverse=True)
+                filhos = []
+                if i in p_nova:
+                    filhos.appen(f(i,matriz))
+                for pai in pop_sort:
+                    menor = float('inf')
+                    for filho in filhos:
+                        if pai > filho:
+                            if (p_nova[filhos.index(filhos)] not in pop):
+                                if filho < menor:
+                                    menor = filho
+                    if menor != float('inf'):
+                        pop[fit.index(pai)] = p_nova[filhos.index(menor)]
+            else:
+                populacao = p_nova
+            min_fits.append(min(fit))
+            med_fits.append(sum(fit)/len(fit))
+            fit = map((lambda x:f(x,matriz)),pop)
+            if min(fit) < fit_melhor_caminho:
+                fit_melhor_caminho = min(fit)
+                melhor_caminho=populacao[fit.index(fit_melhor_caminho)]
+                n_maximo_sem_mudancas = 0 
+            else:
+                n_maximo_sem_mudancas += 1
+    plt.figure()
+    plt.plot(min_fits, label='Fitness minimos')
+    plt.plot(med_fits, label="Fitnes medio")
+    plt.legend()
+    plt.ylabel('Fitness')
+    plt.xlabel('geracoes')
+    plt.show()
+                
+    return fit_melhor_caminho, melhor_caminho, len(min_fits)
