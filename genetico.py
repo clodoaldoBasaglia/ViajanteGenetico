@@ -105,3 +105,10 @@ def random_select(pop, f, matriz):
     for i in range(len(acm)):
         if r < acm[i]:  # verifica em qual intervalo o numero aleatorio esta
             return pop[i]
+
+
+
+def genetico(pop_inicial, f, estagnacao, tx_mutacao, matriz, use_crossover_alternativo=False, id_mutacao=1, elitismo=False):
+
+
+    return pop_inicial
