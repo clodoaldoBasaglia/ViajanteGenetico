@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #coding: utf-8
 
-import math, random, copy
+import math, random, copy,sys
 from matplotlib import pyplot as plt
 
 
@@ -19,9 +19,10 @@ def formatar_coord(file):
         line = line.strip('\n').lstrip()
         content = line.split(' ')
         content = filter(None, content)
+        print(content)
         # print content
-        id = content[0]
-        coordenadas[int(id)] = content[1] + ' ' + content[2]
+        #id = content[0]
+        coordenadas[int(content[0])] = int(content[1]) + ' ' + int(content[2])
 
     return coordenadas, header
 
@@ -42,10 +43,10 @@ def gerar_matriz(header, coordenadas):
 def main(argv):
     file = open(argv[1], 'r')
 
-    coordenadas, header = utils.formatar_coord(file)
+    coordenadas, header = formatar_coord(file)
 
 
-    matriz = utils.gerar_matriz(header, coordenadas)
+    matriz = gerar_matriz(header, coordenadas)
 
 
     pop = genetico.gerar_populacao(200, int(header['DIMENSION']))
